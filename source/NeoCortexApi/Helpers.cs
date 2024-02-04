@@ -581,5 +581,12 @@ namespace NeoCortexApi
 
             return connectedCells;
         }
+
+        //summary
+        //create Threshold Probabilities class
+        //
+        public static List<double[,]> ThresholdingProbabilities(IEnumerable<double> values, double threshold){
+
+        }
     }
 }
