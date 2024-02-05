@@ -219,9 +219,13 @@ namespace NeoCortexApiSample
 
                 var probabilities = sp.Reconstruct(actCols);
 
-                Debug.WriteLine($"Input: {input} SDR: {Helpers.StringifyVector(actCols)}");
+                //xx stores the Threshold Probabilities
+                //threshold value(0.6) has been selected randomly
+                var xx = Helpers.ThresholdProbabilities(probabilities.Values, 0.6);
 
                 Debug.WriteLine($"Input: {input} SDR: {Helpers.StringifyVector(actCols)}");
+
+                //Debug.WriteLine($"Input: {input} SDR: {Helpers.StringifyVector(actCols)}");
             }
         }
     }
