@@ -585,7 +585,7 @@ namespace NeoCortexApi
         //summary
         //create Threshold Probabilities class
         //
-        public static List<double[,]> ThresholdingProbabilities(IEnumerable<double> values, double threshold){
+        public static List<double[,]> ThresholdProbabilities(IEnumerable<double> values, double threshold){
             
             // Returning null for null input values
             if (values == null)
