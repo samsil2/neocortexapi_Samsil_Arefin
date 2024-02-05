@@ -211,6 +211,9 @@ namespace NeoCortexApiSample
 
         private void RunRustructuringExperiment(SpatialPooler sp, EncoderBase encoder, List<double> inputValues)
         {
+            //filePath for generating heatmaps
+            string filePath = "/Users/samsilarefin/Desktop/neocortexapi_Samsil_Arefin/Results/Heatmaps";
+            
             foreach (var input in inputValues)
             {
                 var inpSdr = encoder.Encode(input);
