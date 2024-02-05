@@ -215,7 +215,7 @@ namespace NeoCortexApiSample
             {
                 var inpSdr = encoder.Encode(input);
 
-                var actCols = sp.Compute(inpSdr, false);
+                var actCols = sp.Compute(inpSdr, true);
 
                 var probabilities = sp.Reconstruct(actCols);
 
@@ -226,7 +226,10 @@ namespace NeoCortexApiSample
                 Debug.WriteLine($"Input: {input} SDR: {Helpers.StringifyVector(actCols)}");
 
                 //Debug.WriteLine($"Input: {input} SDR: {Helpers.StringifyVector(actCols)}");
+               
+
             }
+            Console.ReadKey();
         }
     }
 }
