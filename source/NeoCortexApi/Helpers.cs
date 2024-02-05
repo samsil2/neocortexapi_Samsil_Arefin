@@ -593,6 +593,23 @@ namespace NeoCortexApi
                 return null; 
             }
 
+            List<double[,]> result = new List<double[,]>();
+
+            foreach (var numericValue in values)
+            {
+                // Threshold the numeric value
+                int thresholdedValue = (numericValue >= threshold) ? 1 : 0;
+
+                // Create a new 2D array to hold the thresholded value
+                double[,] thresholdedArray = new double[1, 1];
+                thresholdedArray[0, 0] = thresholdedValue;
+
+                // Add the thresholded array to the result list
+                result.Add(thresholdedArray);
+            }
+
+            return result;
+
         }
     }
 }
