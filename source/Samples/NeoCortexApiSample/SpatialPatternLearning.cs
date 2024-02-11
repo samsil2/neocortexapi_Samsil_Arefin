@@ -213,7 +213,7 @@ namespace NeoCortexApiSample
         {
             //filePath for generating heatmaps
             string filePath = "/Users/samsilarefin/Desktop/neocortexapi_Samsil_Arefin/Results/Heatmaps";
-            
+
             foreach (var input in inputValues)
             {
                 var inpSdr = encoder.Encode(input);
@@ -227,6 +227,12 @@ namespace NeoCortexApiSample
                 var xx = Helpers.ThresholdProbabilities(probabilities.Values, 0.6);
 
                 Debug.WriteLine($"Input: {input} SDR: {Helpers.StringifyVector(actCols)}");
+
+                // Print probabilities
+                foreach (var kvp in probabilities)
+                {
+                    Debug.WriteLine($"Key: {kvp.Key}, Value: {kvp.Value}");
+                }
 
                 //Debug.WriteLine($"Input: {input} SDR: {Helpers.StringifyVector(actCols)}");
                
