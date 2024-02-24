@@ -218,7 +218,7 @@ namespace NeoCortexApiSample
             {
                 var inpSdr = encoder.Encode(input);
 
-                var actCols = sp.Compute(inpSdr, true);
+                var actCols = sp.Compute(inpSdr, false);
 
                 var probabilities = sp.Reconstruct(actCols);
 
