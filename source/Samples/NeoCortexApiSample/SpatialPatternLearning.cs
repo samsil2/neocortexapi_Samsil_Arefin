@@ -221,6 +221,18 @@ namespace NeoCortexApiSample
                 var actCols = sp.Compute(inpSdr, false);
 
                 var probabilities = sp.Reconstruct(actCols);
+                
+                //comment will be here
+                 Dictionary<int, double> result = new Dictionary<int, double>();
+
+                  foreach (KeyPair p in result.ToList())
+                {
+                    if (probabilities.TryGetValue((int)p.Key, out var value))
+                    {
+                        result[(int)p.Key] = value;
+                    }
+
+                }
 
                 //xx stores the Threshold Probabilities
                 //threshold value(0.6) has been selected randomly
