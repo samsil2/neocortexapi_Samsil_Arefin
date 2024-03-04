@@ -585,31 +585,26 @@ namespace NeoCortexApi
         //summary
         //create Threshold Probabilities class
         //
-        public static List<double[,]> ThresholdProbabilities(IEnumerable<double> values, double threshold){
-            
+        public static List<int> ThresholdProbabilities(IEnumerable<double> values, double threshold)
+        {
             // Returning null for null input values
             if (values == null)
             {
                 return null; 
             }
 
-            List<double[,]> result = new List<double[,]>();
+
+            List<int> result = new List<int>();
 
             foreach (var numericValue in values)
             {
-                // Threshold the numeric value
                 int thresholdedValue = (numericValue >= threshold) ? 1 : 0;
 
-                // Create a new 2D array to hold the thresholded value
-                double[,] thresholdedArray = new double[1, 1];
-                thresholdedArray[0, 0] = thresholdedValue;
-
-                // Add the thresholded array to the result list
-                result.Add(thresholdedArray);
+                result.Add(thresholdedValue);
             }
 
             return result;
-
         }
+
     }
 }
