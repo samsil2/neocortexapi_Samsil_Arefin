@@ -214,6 +214,9 @@ namespace NeoCortexApiSample
             //filePath for generating heatmaps
             string filePath = "/Users/samsilarefin/Desktop/neocortexapi_Samsil_Arefin/Results/Heatmaps";
 
+            //create a list for threshold permanence values
+             List<int[]> thPermanence = new List<int[]>();
+
             foreach (var input in inputValues)
             {
                 var inpSdr = encoder.Encode(input);
