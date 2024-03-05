@@ -216,6 +216,7 @@ namespace NeoCortexApiSample
 
             //create a list for threshold permanence values
              List<int[]> thPermanence = new List<int[]>();
+             int maxInput = 100;
 
             foreach (var input in inputValues)
             {
@@ -223,31 +224,18 @@ namespace NeoCortexApiSample
 
                 var actCols = sp.Compute(inpSdr, false);
 
-                var probabilities = sp.Reconstruct(actCols);
-                
-                //comment will be here
-                 Dictionary<int, double> result = new Dictionary<int, double>();
+                //var probabilities = sp.Reconstruct(actCols);
 
-                  foreach (KeyPair p in result.ToList())
-                {
-                    if (probabilities.TryGetValue((int)p.Key, out var value))
-                    {
-                        result[(int)p.Key] = value;
-                    }
+                Dictionary<int, double> reconstructedPermanence = sp.Reconstruct(actCols);
 
-                }
 
                 //xx stores the Threshold Probabilities
                 //threshold value(0.6) has been selected randomly
-                var xx = Helpers.ThresholdProbabilities(probabilities.Values, 0.6);
+                //var xx = Helpers.ThresholdProbabilities(probabilities.Values, 0.6);
 
                 Debug.WriteLine($"Input: {input} SDR: {Helpers.StringifyVector(actCols)}");
 
-                // Print probabilities
-                foreach (var kvp in probabilities)
-                {
-                    Debug.WriteLine($"Key: {kvp.Key}, Value: {kvp.Value}");
-                }
+                
 
                 //Debug.WriteLine($"Input: {input} SDR: {Helpers.StringifyVector(actCols)}");
                
