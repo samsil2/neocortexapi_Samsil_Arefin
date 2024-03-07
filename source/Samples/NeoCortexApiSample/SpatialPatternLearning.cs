@@ -216,12 +216,7 @@ namespace NeoCortexApiSample
              string filePath = "/Users/samsilarefin/Desktop/neocortexapi_Samsil_Arefin/Results/Heatmaps";
 
             //create a list for threshold permanence values
-             List<int[]> thPermanence = new List<int[]>();
-
-            //create a list for threshold permanence values
              Dictionary<int, double> allPermanenceValues = new Dictionary<int, double>();
-             
-
              
 
             foreach (var input in inputValues)
@@ -238,7 +233,7 @@ namespace NeoCortexApiSample
                     Debug.WriteLine($"Column: {kvp.Key}, Probability: {kvp.Value}");
                 }
 
-                //getting key, values of reconstructed Probabilities
+                //getting keys, values of reconstructed Probabilities
                 Dictionary<int, double> reconstructedProbabilities = sp.Reconstruct(actCols);
       
 
