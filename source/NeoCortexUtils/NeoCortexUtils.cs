@@ -277,7 +277,7 @@ namespace NeoCortex
                 throw new ArgumentException("Size of the array must be less than or equal to specified 'bmpWidth' * 'bmpHeight'");
 
             // Create a new bitmap
-            Bitmap myBitmap = new Bitmap(bmpWidth, bmpHeight);
+            System.Drawing.Bitmap myBitmap = new System.Drawing.Bitmap(bmpWidth, bmpHeight);
 
             int k = 0;
             var scale = Math.Max(1, (bmpWidth / oneDimArray.Count) / 2);
