@@ -1,4 +1,5 @@
-﻿using NeoCortexApi;
+﻿using NeoCortex;
+using NeoCortexApi;
 using NeoCortexApi.Encoders;
 using NeoCortexApi.Entities;
 using NeoCortexApi.Network;
@@ -51,7 +52,7 @@ namespace NeoCortexApiSample
                 StimulusThreshold=10,
             };
 
-            double max = 100;
+            double max = 1;
 
             //
             // This dictionary defines a set of typical encoder parameters.
@@ -212,11 +213,16 @@ namespace NeoCortexApiSample
         private void RunRustructuringExperiment(SpatialPooler sp, EncoderBase encoder, List<double> inputValues)
         {
             //filePath for generating heatmaps
-            string filePath = "/Users/samsilarefin/Desktop/neocortexapi_Samsil_Arefin/Results/Heatmaps";
+             string filePath = "/Users/samsilarefin/Desktop/neocortexapi_Samsil_Arefin/Results/Heatmaps";
 
             //create a list for threshold permanence values
              List<int[]> thPermanence = new List<int[]>();
-             int maxInput = 100;
+
+            //create a list for threshold permanence values
+             Dictionary<int, double> allPermanenceValues = new Dictionary<int, double>();
+             
+
+             
 
             foreach (var input in inputValues)
             {
@@ -224,23 +230,76 @@ namespace NeoCortexApiSample
 
                 var actCols = sp.Compute(inpSdr, false);
 
-                //var probabilities = sp.Reconstruct(actCols);
+               var probabilities = sp.Reconstruct(actCols);
 
-                Dictionary<int, double> reconstructedPermanence = sp.Reconstruct(actCols);
+                //print probabilities of active cols
+                foreach (var kvp in probabilities)
+                {
+                    Debug.WriteLine($"Column: {kvp.Key}, Probability: {kvp.Value}");
+                }
+
+                //getting key, values of reconstructed Probabilities
+                Dictionary<int, double> reconstructedProbabilities = sp.Reconstruct(actCols);
+      
+
+                 foreach (var keys in reconstructedProbabilities)
+                {
+                    int inputColumns = keys.Key;
+
+                    double permanceValues = keys.Value;
+
+                    allPermanenceValues[inputColumns] = permanceValues;
+
+                }
+
+                 //max cols 200
+                 // make unactive cols values: 0
+
+                for (int inputColumns = 0; inputColumns < 200; inputColumns++)
+                {
+
+                    if (!reconstructedProbabilities.ContainsKey(inputColumns))
+                    {
+
+                        allPermanenceValues[inputColumns] = 0.0;
+
+                    }
+
+                }
+
+                //convert into list from dictionary
+                List<double> permanenceValuesList = allPermanenceValues.Values.ToList();
 
 
                 //xx stores the Threshold Probabilities
                 //threshold value(0.6) has been selected randomly
-                //var xx = Helpers.ThresholdProbabilities(probabilities.Values, 0.6);
+                var thresholdValues = Helpers.ThresholdProbabilities(permanenceValuesList, 0.52);
+             
 
                 Debug.WriteLine($"Input: {input} SDR: {Helpers.StringifyVector(actCols)}");
 
-                
+                Debug.WriteLine($"Input: {input} SDR: {Helpers.StringifyVector(actCols)}");
 
-                //Debug.WriteLine($"Input: {input} SDR: {Helpers.StringifyVector(actCols)}");
-               
+
+                //print all allPermanence Values
+
+                foreach (var keys in allPermanenceValues)
+                {
+                    Debug.WriteLine($"AllPermanence Column: {keys.Key}, AllPermanence Values: {keys.Value}");
+                }
+
+                //print threshold values
+                int temp = 0;
+                foreach (var t in thresholdValues)
+                {
+                    Debug.WriteLine($"threshold index:{temp} , threshold value:{t}");
+                    temp = temp + 1;
+                }
 
             }
+
+           
+
             Console.ReadKey();
         }
     }
