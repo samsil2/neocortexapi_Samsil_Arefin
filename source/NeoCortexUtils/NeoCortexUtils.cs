@@ -266,6 +266,42 @@ namespace NeoCortex
 
 
 
+        //1d heatmaps generating class
+        public static void Draw1dHeatmaps(List<int> oneDimArray, string filePath,
+                                        int bmpWidth = 1024,
+                                        int bmpHeight = 1024,
+                                        decimal redStart = 200, decimal yellowMiddle = 127, decimal greenStart = 20)
+        {
+            // Check if the total size exceeds the bitmap dimensions
+            if (oneDimArray.Count > bmpWidth * bmpHeight)
+                throw new ArgumentException("Size of the array must be less than or equal to specified 'bmpWidth' * 'bmpHeight'");
+
+            // Create a new bitmap
+            Bitmap myBitmap = new Bitmap(bmpWidth, bmpHeight);
+
+            int k = 0;
+            var scale = Math.Max(1, (bmpWidth / oneDimArray.Count) / 2);
+
+            for (int i = 0; i < oneDimArray.Count; i++)
+            {
+                for (int padX = 0; padX < scale; padX++)
+                {
+                    for (int padY = 0; padY < scale; padY++)
+                    {
+                        int x = k % bmpWidth;
+                        int y = k / bmpWidth;
+                        myBitmap.SetPixel(x, y, GetColor(redStart, yellowMiddle, greenStart, oneDimArray[i]));
+                        k++;
+                    }
+                }
+            }
+
+            // Save the bitmap to a file
+            myBitmap.Save(filePath, ImageFormat.Png);
+        }
+
+
+
         private static Color GetColor(decimal redStartVal, decimal yellowStartVal, decimal greenStartVal, decimal val)
         {
             // color points
