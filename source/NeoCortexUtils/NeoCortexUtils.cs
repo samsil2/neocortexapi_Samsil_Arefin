@@ -9,6 +9,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 
+
 namespace NeoCortex
 {
     /// <summary>
@@ -263,42 +264,41 @@ namespace NeoCortex
 
             myBitmap.Save(filePath, ImageFormat.Png);
         }
-
+        
 
 
         //1d heatmaps generating class
-        public static void Draw1dHeatmaps(List<int> oneDimArray, string filePath,
-                                        int bmpWidth = 1024,
-                                        int bmpHeight = 1024,
-                                        decimal redStart = 200, decimal yellowMiddle = 127, decimal greenStart = 20)
+        public static void Draw1dHeatmaps(List<int> oneDimList, string filePath,
+                                 int bmpWidth = 1024,
+                                 int bmpHeight = 1024,
+                                 decimal redStart = 200, decimal yellowMiddle = 127, decimal greenStart = 20)
         {
-            // Check if the total size exceeds the bitmap dimensions
-            if (oneDimArray.Count > bmpWidth * bmpHeight)
-                throw new ArgumentException("Size of the array must be less than or equal to specified 'bmpWidth' * 'bmpHeight'");
+            int totalLength = oneDimList.Count;
 
-            // Create a new bitmap
-            System.Drawing.Bitmap myBitmap = new System.Drawing.Bitmap(bmpWidth, bmpHeight);
+            if (totalLength > bmpWidth * bmpHeight)
+                throw new ArgumentException("Size of the list must be less than or equal to the specified 'bmpWidth' * 'bmpHeight'");
+
+            Bitmap myBitmap = new Bitmap(bmpWidth, bmpHeight);
 
             int k = 0;
-            var scale = Math.Max(1, (bmpWidth / oneDimArray.Count) / 2);
 
-            for (int i = 0; i < oneDimArray.Count; i++)
+            for (int pixelY = 0; pixelY < bmpHeight; pixelY++)
             {
-                for (int padX = 0; padX < scale; padX++)
+                for (int pixelX = 0; pixelX < bmpWidth; pixelX++)
                 {
-                    for (int padY = 0; padY < scale; padY++)
-                    {
-                        int x = k % bmpWidth;
-                        int y = k / bmpWidth;
-                        myBitmap.SetPixel(x, y, GetColor(redStart, yellowMiddle, greenStart, oneDimArray[i]));
-                        k++;
-                    }
+                    int value = oneDimList[k];
+                    myBitmap.SetPixel(pixelX, pixelY, GetColor(redStart, yellowMiddle, greenStart, value));
+                    k++;
+                    if(k >= totalLength)
+                        break;
                 }
+                if (k >= totalLength)
+                    break;
             }
 
-            // Save the bitmap to a file
             myBitmap.Save(filePath, ImageFormat.Png);
         }
+
 
 
 
