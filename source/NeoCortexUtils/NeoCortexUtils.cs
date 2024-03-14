@@ -304,16 +304,16 @@ namespace NeoCortex
             using (SolidBrush textBrush = new SolidBrush(Color.Yellow))
             {
                 // Measure text width to center it horizontally
-                SizeF redTextSize = g.MeasureString("red=0", legendFont);
-                SizeF greenTextSize = g.MeasureString("green=1", legendFont);
+                SizeF redTextSize = g.MeasureString("red=1", legendFont);
+                SizeF greenTextSize = g.MeasureString("green=0", legendFont);
 
                 // Calculate text positions to center them horizontally
                 float redTextX = legendX + (legendWidth / 4) - (redTextSize.Width / 2);
                 float greenTextX = legendX + (3 * legendWidth / 4) - (greenTextSize.Width / 2);
 
                 // Draw legend text
-                g.DrawString("red=0", legendFont, textBrush, redTextX, textY);
-                g.DrawString("green=1", legendFont, textBrush, greenTextX, textY);
+                g.DrawString("red=1", legendFont, textBrush, redTextX, textY);
+                g.DrawString("green=0", legendFont, textBrush, greenTextX, textY);
             }
         }
 
