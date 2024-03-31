@@ -193,7 +193,22 @@ Utilizing the Neocortexapi's Reconstruct() method, we meticulously reverse the t
      }
 
      return permancences;
- }
+     }
+<br> 
+<b>Reconstruct() Workflow:</b> <br>
+
+1. Input Validation: Thorough validation checks, throwing an ArgumentNullException if the input array of active mini-columns is null.
+
+2. Column Retrieval: Retrieve the list of columns associated with the active mini-columns from the connections.
+
+3. Reconstruction Process: Iterate through each column, accessing the synapses in its proximal dendrite.
+
+4. Permanence Accumulation: For each synapse, accumulate the permanence values for each input index in the reconstructed input dictionary.
+
+5. Dictionary Update: Update the reconstructed input dictionary, considering whether the input index already exists or needs to be added as a new key-value pair.
+
+6. Result Return: The method concludes by returning the reconstructed input as a dictionary, mapping input indices to their associated permanences.
+
 
 
 
