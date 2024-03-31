@@ -582,9 +582,12 @@ namespace NeoCortexApi
             return connectedCells;
         }
 
-        //summary
-        //create Threshold Probabilities class
-        //
+        /// <summary>
+        /// Thresholds the input values based on a given threshold.
+        /// </summary>
+        /// <param name="values">The enumerable collection of double values to be thresholded.</param>
+        /// <param name="threshold">The threshold value used for thresholding.</param>
+        /// <returns>An array of double values representing the thresholded values (1.0 if >= threshold, 0.0 otherwise).</returns>
 
 
         public static double[] ThresholdProbabilities(IEnumerable<double> values, double threshold)
