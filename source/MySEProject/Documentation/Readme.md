@@ -31,6 +31,11 @@ In essence, permanence values regulate the adaptability and stability of connect
 Methodology:
 <br>
 <br>
+Our methodology revolves around the precise reconstruction of the original input, initiated by providing numerical values ranging from 0 to 99. The encoder transforms these numerical values into int[] arrays, representing arrays of 0s and 1s, each consisting of 200 bits post-encoding. These encoded arrays become the sole input for our experiment.
+
+Fig: Methodology Flowchart
+<br>
+![flowchart](https://github.com/samsil2/neocortexapi_Samsil_Arefin/blob/master/source/MySEProject/Documentation/Flowchart.png)
 
 
 
