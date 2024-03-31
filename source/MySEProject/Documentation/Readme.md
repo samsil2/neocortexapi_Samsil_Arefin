@@ -1,6 +1,6 @@
 Project Name: ML 23/24-05 Implement the visualization of permanence value 
 <br>
-Main Branch link: [Here](https://github.com/samsil2/neocortexapi_Samsil_Arefin/tree/master)
+Main Branch link: [Project Link](https://github.com/samsil2/neocortexapi_Samsil_Arefin/tree/master)
 <br>
 Program Links: <br>
 [SpatialPatternLearning](https://github.com/samsil2/neocortexapi_Samsil_Arefin/blob/master/source/Samples/NeoCortexApiSample/SpatialPatternLearning.cs)
@@ -108,6 +108,18 @@ HTM: The encoded int[] arrays undergo transformation using the HTM Spatial Poole
 
   <br>
   Implementation Details: <br>
+       
+          //inputs define and generation
+           double max = 100;
+
+            // We create here 100 random input values.
+            List<double> inputValues = new List<double>();
+
+            for (int i = 0; i < (int)max; i++)
+            {
+                inputValues.Add((double)i);
+            }
+
   Reconstruct permanence values from active columns using the Spatial Pooler
   
     var probabilities = sp.Reconstruct(actCols);
@@ -314,6 +326,23 @@ Final Outcome:<br>
 After doing every steps, we are able to generate 100 pics of heatmaps. Here only one pic is added for sample.
 
 ![Heatmap](https://github.com/samsil2/neocortexapi_Samsil_Arefin/blob/master/source/MySEProject/Documentation/431171324_937974394395819_9006971765585748762_n.png)
+
+<b>How to run this project:</b>
+1. Download this repo and unzip it.
+2. Install visual studio community 2022, with latest dotnet versions or min version 5.0
+3. Open NeoCortexApi.sln with visual studio
+4. Choose NeoCortexApiSample > Debug
+5. Click the run button.
+
+<br> 
+Previous Issues links: <br> 
+[76](https://github.com/UniversityOfAppliedSciencesFrankfurt/se-cloud-2023-2024/issues/76) <br> 
+[105](https://github.com/UniversityOfAppliedSciencesFrankfurt/se-cloud-2023-2024/issues/105) <br>
+[131](https://github.com/UniversityOfAppliedSciencesFrankfurt/se-cloud-2023-2024/issues/131) <br>
+[135](https://github.com/UniversityOfAppliedSciencesFrankfurt/se-cloud-2023-2024/issues/135)
+
+
+
 
 
 
