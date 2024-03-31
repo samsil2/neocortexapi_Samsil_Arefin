@@ -207,11 +207,113 @@ Utilizing the Neocortexapi's Reconstruct() method, we meticulously reverse the t
 
 5. Dictionary Update: Update the reconstructed input dictionary, considering whether the input index already exists or needs to be added as a new key-value pair.
 
-6. Result Return: The method concludes by returning the reconstructed input as a dictionary, mapping input indices to their associated permanences.
+6. Result Return: The method concludes by returning the reconstructed input as a dictionary, mapping input indices to their associated permanence.
 
+<br> 
+Threshold values are converted into 2d array, by inspiring image similarity experiments.
 
+                var colDims = new int[] { 64, 64 };
 
+                List<double[,]> arrays = new List<double[,]>();
+                arrays.Add(ArrayUtils.Make2DArray(thresholdValues, colDims[0], colDims[1]));
 
+<br> 
+create a folder to store output images(heatmaps).
+<br> 
+
+                string outFolder = $"{nameof(RunRustructuringExperiment)}";
+                Directory.CreateDirectory(outFolder);
+                string outputImage = $"{outFolder}\\{input}";
+<br>
+passing parameters and call draw heatmaps class:
+
+    // calling drawheatmaps class
+    NeoCortexUtils.DrawHeatmaps(arrays, $"{outputImage}_threshold_heatmap.png", 1024, 1024, 200, 127, 20);
+
+<br> 
+Draw heatmap class code:<br> 
+
+    /// <summary>
+        /// Drawas bitmaps from list of arrays.
+        /// </summary>
+        /// <param name="twoDimArrays">List of arrays to be represented as bitmaps.</param>
+        /// <param name="filePath">Output image path.</param>
+        /// <param name="bmpWidth">The width of the bitmap.</param>
+        /// <param name="bmpHeight">The height of the bitmap.</param>
+        /// <param name="greenStart">ALl values below this value are by defaut green.
+        /// Values higher than this value transform to yellow.</param>
+        /// <param name="yellowMiddle">The middle of the heat. Values lower than this value transforms to green.
+        /// Values higher than this value transforms to red.</param>
+        /// <param name="redStart">Values higher than this value are by default red. Values lower than this value transform to yellow.       </param>
+        public static void DrawHeatmaps(List<double[,]> twoDimArrays, string filePath,
+                                 int bmpWidth = 1024, int bmpHeight = 1024,
+                                 decimal redStart = 200, decimal yellowMiddle = 127, decimal greenStart = 20)
+        {
+            int widthOfAll = 0, heightOfAll = 0;
+
+            foreach (var arr in twoDimArrays)
+            {
+                widthOfAll += arr.GetLength(0);
+                heightOfAll += arr.GetLength(1);
+            }
+
+            if (widthOfAll > bmpWidth || heightOfAll > bmpHeight)
+                throw new ArgumentException("Size of all included arrays must be less than specified 'bmpWidth' and 'bmpHeight'");
+
+            using (System.Drawing.Bitmap myBitmap = new System.Drawing.Bitmap(bmpWidth, bmpHeight))
+            using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(myBitmap))
+            {
+                int k = 0;
+
+                for (int n = 0; n < twoDimArrays.Count; n++)
+                {
+                    var arr = twoDimArrays[n];
+
+                    int w = arr.GetLength(0);
+                    int h = arr.GetLength(1);
+
+                    var scale = Math.Max(1, ((bmpWidth) / twoDimArrays.Count) / (w + 1)); // +1 is for offset between pictures in X dim.
+
+                    for (int Xcount = 0; Xcount < w; Xcount++)
+                    {
+                        for (int Ycount = 0; Ycount < h; Ycount++)
+                        {
+                            for (int padX = 0; padX < scale; padX++)
+                            {
+                                for (int padY = 0; padY < scale; padY++)
+                                {
+                                    myBitmap.SetPixel(n * (bmpWidth / twoDimArrays.Count) + Xcount * scale + padX, Ycount * scale + padY, GetColor(redStart, yellowMiddle, greenStart, (Decimal)arr[Xcount, Ycount]));
+                                    k++;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Draw text on the bitmap
+                DrawLegends(g,bmpWidth,bmpHeight,redStart,yellowMiddle,greenStart);
+
+                // Save the heatmap to file
+                myBitmap.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
+                
+            }
+        }
+<br> 
+Get color code:
+
+        // Get color for threshold values (0 for green, 1 for red)
+        private static Color GetColor(decimal redStartVal, decimal yellowStartVal, decimal greenStartVal, decimal val)
+        {
+            if (val == 0)
+                return Color.Green;
+            else
+                return Color.Red;
+        }
+
+Final Outcome:<br> 
+After doing every steps, we are able to generate 100 pics of heatmaps. Here only one pic is added for sample.
+
+![Heatmap](https://github.com/samsil2/neocortexapi_Samsil_Arefin/blob/master/source/MySEProject/Documentation/431171324_937974394395819_9006971765585748762_n.png)
 
 
 
