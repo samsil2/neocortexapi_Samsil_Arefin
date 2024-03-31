@@ -155,7 +155,45 @@ ThresholdProbabilities Class code:<br>
             return result;
         }
 
+<br> 
+<b>Reconstruct() Method:</b> <br>
+Utilizing the Neocortexapi's Reconstruct() method, we meticulously reverse the transformation of the encoded int[] arrays. The reconstructed representations are shaped by permanence values obtained from the Reconstruction method.
+<br> 
 
+    public Dictionary<int, double> Reconstruct(int[] activeMiniColumns)
+     {
+     if (activeMiniColumns == null)
+     {
+         throw new ArgumentNullException(nameof(activeMiniColumns));
+     }
+
+     var cols = connections.GetColumnList(activeMiniColumns);
+
+     Dictionary<int, double> permancences = new Dictionary<int, double>();
+
+    
+     foreach (var col in cols)
+     {
+         col.ProximalDendrite.Synapses.ForEach(s =>
+         {
+             double currPerm = 0.0;
+
+             
+             if (permancences.TryGetValue(s.InputIndex, out currPerm))
+             {
+               
+                 permancences[s.InputIndex] = s.Permanence + currPerm;
+             }
+             else
+             {
+              
+                 permancences[s.InputIndex] = s.Permanence;
+             }
+         });
+     }
+
+     return permancences;
+ }
 
 
 
