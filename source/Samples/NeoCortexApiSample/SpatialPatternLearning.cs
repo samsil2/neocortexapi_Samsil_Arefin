@@ -237,7 +237,7 @@ namespace NeoCortexApiSample
                 var actCols = sp.Compute(inpSdr, false);
                 var probabilities = sp.Reconstruct(actCols);
 
-                // Create a list for threshold permanence values
+                // Create a list for all permanence values
                 Dictionary<int, double> allPermanenceValues = new Dictionary<int, double>();
 
                 // Get keys, values of reconstructed Probabilities
