@@ -1,4 +1,4 @@
-Group Name: Samsil_Arefin(Individual)
+Project Name: ML 23/24-05 Implement the visualization of permanence value 
 <br>
 Main Branch link: [Here](https://github.com/samsil2/neocortexapi_Samsil_Arefin/tree/master)
 <br>
