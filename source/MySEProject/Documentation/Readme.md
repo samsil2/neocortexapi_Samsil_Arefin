@@ -37,6 +37,94 @@ Fig: Methodology Flowchart
 <br>
 ![flowchart](https://github.com/samsil2/neocortexapi_Samsil_Arefin/blob/master/source/MySEProject/Documentation/Flowchart.png)
 
+<br> 
+HTM: The encoded int[] arrays undergo transformation using the HTM Spatial Pooler, generating Sparse Distributed Representations (SDRs). This pivotal step lays the groundwork for further exploration.
+<br> 
+<b>Running Reconstruct Method:</b> <br> 
+
+    private void RunRustructuringExperiment(SpatialPooler sp, EncoderBase encoder, List<double> inputValues)
+        {
+            foreach (var input in inputValues)
+            {
+                var inpSdr = encoder.Encode(input);
+                var actCols = sp.Compute(inpSdr, false);
+                var probabilities = sp.Reconstruct(actCols);
+
+                // Create a list for threshold permanence values
+                Dictionary<int, double> allPermanenceValues = new Dictionary<int, double>();
+
+                // Get keys, values of reconstructed Probabilities
+                foreach (var kvp in probabilities)
+                {
+                    allPermanenceValues[kvp.Key] = kvp.Value;
+                }
+
+                // Fill in missing keys with 0
+                for (int inputColumns = 0; inputColumns < 200; inputColumns++)
+                {
+                    if (!probabilities.ContainsKey(inputColumns))
+                    {
+                        allPermanenceValues[inputColumns] = 0.0;
+                    }
+                }
+
+                //print all allPermanence Values
+
+                foreach (var keys in allPermanenceValues)
+                {
+                    Debug.WriteLine($"AllPermanence Column: {keys.Key}, AllPermanence Values: {keys.Value}");
+                }
+
+                // Convert dictionary values to list
+                List<double> permanenceValuesList = allPermanenceValues.Values.ToList();
+
+                // Get threshold values
+                var thresholdValues = Helpers.ThresholdProbabilities(permanenceValuesList, 0.52);
+
+                var colDims = new int[] { 64, 64 };
+
+                List<double[,]> arrays = new List<double[,]>();
+                arrays.Add(ArrayUtils.Make2DArray(thresholdValues, colDims[0], colDims[1]));
+
+                string outFolder = $"{nameof(RunRustructuringExperiment)}";
+                Directory.CreateDirectory(outFolder);
+                string outputImage = $"{outFolder}\\{input}";
+
+
+                // print all threshold values
+                int temp = 0;
+                foreach (var t in thresholdValues)
+                {
+                    Debug.WriteLine($"threshold index:{temp} , threshold value:{t}");
+                    temp = temp + 1;
+                }
+
+                // calling drawheatmaps class
+                NeoCortexUtils.DrawHeatmaps(arrays, $"{outputImage}_threshold_heatmap.png", 1024, 1024, 200, 127, 20);
+            }
+
+            Console.ReadKey();
+        }
+
+  <br>
+  Implementation Details: <br>
+  Reconstruct permanence values from active columns using the Spatial Pooler
+  
+    var probabilities = sp.Reconstruct(actCols);
+<br>
+Set the maximum input index 200 <br>
+Note: According to the size of Encoded Inputs (200 bits)
+<br>
+
+
+
+
+
+
+
+
+
+
 
 
 
