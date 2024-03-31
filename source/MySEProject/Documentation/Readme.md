@@ -50,7 +50,7 @@ HTM: The encoded int[] arrays undergo transformation using the HTM Spatial Poole
                 var actCols = sp.Compute(inpSdr, false);
                 var probabilities = sp.Reconstruct(actCols);
 
-                // Create a list for threshold permanence values
+                // Create a list for all permanence values
                 Dictionary<int, double> allPermanenceValues = new Dictionary<int, double>();
 
                 // Get keys, values of reconstructed Probabilities
@@ -114,7 +114,46 @@ HTM: The encoded int[] arrays undergo transformation using the HTM Spatial Poole
 <br>
 Set the maximum input index 200 <br>
 Note: According to the size of Encoded Inputs (200 bits)
+<be>
+<b>allPermanenceValues<b> contains all permanence values including active and inactive colums where inactive col values set to 0 and active cols values remain the same.
+<br> 
+
+<b>permanenceValuesList</b> is used to convert allPermanenceValues from dictionary to list.
 <br>
+Threshold values is selected 0.52 to do thresholding permanence values. it will make either 0 or 1.
+<br>
+
+                // Get threshold values
+                var thresholdValues = Helpers.ThresholdProbabilities(permanenceValuesList, 0.52);
+<br>
+ThresholdProbabilities Class code:<br>
+
+    public static double[] ThresholdProbabilities(IEnumerable<double> values, double threshold)
+        {
+            // Returning null for null input values
+            if (values == null)
+            {
+                return null;
+            }
+
+            // Get the length of the values enumerable
+            int length = values.Count();
+
+            // Create a one-dimensional array to hold thresholded values
+            double[] result = new double[length];
+
+            int index = 0;
+            foreach (var numericValue in values)
+            {
+                // Determine the thresholded value based on the threshold
+                double thresholdedValue = (numericValue >= threshold) ? 1.0 : 0.0;
+
+                // Assign the thresholded value to the result array
+                result[index++] = thresholdedValue;
+            }
+
+            return result;
+        }
 
 
 
