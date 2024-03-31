@@ -214,111 +214,20 @@ namespace NeoCortexApiSample
             return sp;
         }
 
-        //private void RunRustructuringExperiment(SpatialPooler sp, EncoderBase encoder, List<double> inputValues)
-        //{
-        //    //filePath for generating heatmaps
 
 
-        //    //create a list for threshold permanence values
-        //     Dictionary<int, double> allPermanenceValues = new Dictionary<int, double>();
+        //<summary>
+        // RunRustructuringExperiment Method:
+        // This method conducts an experiment to reconstruct input sequences using the Hierarchical Temporal Memory (HTM) algorithm.
+        // It takes three parameters: sp (SpatialPooler), encoder (EncoderBase), and inputValues (List<double>).
+        // The method iterates through each input value, encoding it into an int[] array using the encoder.Encode() method.
+        // It then computes the SDR representation of the encoded input using the sp.Compute() method.
+        // The reconstructed probabilities of each column being active are obtained using the sp.Reconstruct() method.
+        // Permanence values are extracted from the reconstructed probabilities and thresholded to identify active columns.
+        // Heatmaps are generated to visually represent the thresholded permanence values using the NeoCortexUtils.DrawHeatmaps() method.
+        // The resulting heatmap images are saved in an output folder with filenames based on the corresponding input value.
+        // Finally, the method waits for a key press before exiting.
 
-
-        //    foreach (var input in inputValues)
-        //    {
-        //        var inpSdr = encoder.Encode(input);
-
-        //        var actCols = sp.Compute(inpSdr, false);
-
-        //       var probabilities = sp.Reconstruct(actCols);
-
-        //        //print probabilities of active cols
-        //        foreach (var kvp in probabilities)
-        //        {
-        //            Debug.WriteLine($"Column: {kvp.Key}, Probability: {kvp.Value}");
-        //        }
-
-        //        //getting keys, values of reconstructed Probabilities
-        //        Dictionary<int, double> reconstructedProbabilities = sp.Reconstruct(actCols);
-
-
-        //         foreach (var keys in reconstructedProbabilities)
-        //        {
-        //            int inputColumns = keys.Key;
-
-        //            double permanceValues = keys.Value;
-
-        //            allPermanenceValues[inputColumns] = permanceValues;
-
-        //        }
-
-        //         //max cols 200
-        //         // make unactive cols values: 0
-
-        //        for (int inputColumns = 0; inputColumns < 200; inputColumns++)
-        //        {
-
-        //            if (!reconstructedProbabilities.ContainsKey(inputColumns))
-        //            {
-
-        //                allPermanenceValues[inputColumns] = 0.0;
-
-        //            }
-
-        //        }
-
-        //        //convert into list from dictionary
-        //        List<double> permanenceValuesList = allPermanenceValues.Values.ToList();
-
-
-        //        //xx stores the Threshold Probabilities
-        //        //threshold value(0.52) has been selected randomly
-        //        var thresholdValues = Helpers.ThresholdProbabilities(permanenceValuesList, 0.52);
-
-
-        //        Debug.WriteLine($"Input: {input} SDR: {Helpers.StringifyVector(actCols)}");
-
-        //        Debug.WriteLine($"Input: {input} SDR: {Helpers.StringifyVector(actCols)}");
-
-
-        //        //print all allPermanence Values
-
-        //        foreach (var keys in allPermanenceValues)
-        //        {
-        //            Debug.WriteLine($"AllPermanence Column: {keys.Key}, AllPermanence Values: {keys.Value}");
-        //        }
-
-        //        //print threshold values
-        //        int temp = 0;
-        //        foreach (var t in thresholdValues)
-        //        {
-        //            Debug.WriteLine($"threshold index:{temp} , threshold value:{t}");
-        //            temp = temp + 1;
-        //        }
-        //        var colDims = new int[] { 64, 64 };
-        //        //NeoCortexUtils.Draw1dHeatmaps(thresholdValues, filePath,1024,1024,60,127,20);
-        //        // GeneralUnitTests.TestHeatmapCreation(thresholdValues);
-        //        List<double[,]> twoDimenArray = ArrayUtils.Make2DArray<int>(thresholdValues, colDims[0], colDims[1]);
-        //        twoDimenArray = ArrayUtils.Transpose(twoDimenArray);
-        //        List<double[,]> arrays = new List<double[,]>();
-        //        arrays.Add(twoDimenArray);
-        //        arrays.Add(ArrayUtils.Transpose(ArrayUtils.Make2DArray<int>(thresholdValues, (int)Math.Sqrt(thresholdValues.Length), (int)Math.Sqrt(thresholdValues.Length))));
-        //        string outFolder = $"{RunRustructuringExperiment}";
-
-        //        Directory.CreateDirectory(outFolder);
-        //        string outputImage = $"{outFolder}\\{input}";
-
-        //        NeoCortexUtils.DrawHeatmaps(arrays, outputImage);
-
-        //    }
-
-
-
-
-
-
-
-        //    Console.ReadKey();
-        //}
 
         private void RunRustructuringExperiment(SpatialPooler sp, EncoderBase encoder, List<double> inputValues)
         {
@@ -383,6 +292,7 @@ namespace NeoCortexApiSample
 
             Console.ReadKey();
         }
+
 
 
     }
