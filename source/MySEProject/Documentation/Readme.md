@@ -331,8 +331,10 @@ After doing every steps, we are able to generate 100 pics of heatmaps. Here only
 1. Download this repo and unzip it.
 2. Install visual studio community 2022, with latest dotnet versions or min version 5.0
 3. Open NeoCortexApi.sln with visual studio
-4. Choose NeoCortexApiSample > Debug
+4. Choose source-> samples -> NeoCortexApiSample > Debug
 5. Click the run button.
+6. Output: source-> samples -> NeoCortexApiSample > bin -> Debug -> net8.0(dotnet own version) -> RunRustructuringExperiment
+
 
 <br> 
 Previous Issues links: <br> 
